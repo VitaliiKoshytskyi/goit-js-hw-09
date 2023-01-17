@@ -3,23 +3,42 @@ import "flatpickr/dist/flatpickr.min.css";
 
 const inputEl = document.querySelector('#datetime-picker')
 const startButtonEl = document.querySelector('button')
+const daysEl = document.querySelector('[data-days]')
+const hoursEl = document.querySelector('[data-hours]')
+const minutesEl = document.querySelector('[data-minutes]')
+const secEl = document.querySelector('[data-seconds]')
 
+startButtonEl.setAttribute('disabled', 'true')
+
+
+let timerID = null;
+let selectedDate = null;
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    onClose(selectedDates) {
+     
+      if (selectedDates[0] >= new Date()) {
+          startButtonEl.removeAttribute('disabled')
+         selectedDate = selectedDates[0]
+
+        
+      } else {
+          startButtonEl.setAttribute('disabled', 'true')
+          return alert("Please choose a date in the future")
+        }
+       
   },
 };
 
-const currentTime = Date.now()
-console.log(currentTime)
 
 
-startButtonEl.setAttribute('disabled', 'true')
 flatpickr(inputEl,options)
+
+
+
 
 
 const addLeadingZero = (value) => {
@@ -41,15 +60,33 @@ const convertMs = (ms) => {
   return { days, hours, minutes, seconds };
 }
 
+const timeCounterHandler = () => {
+     const currentDate = new Date();
+        const deltaDate = selectedDate - currentDate;
+        const timeComponents = convertMs(deltaDate)
+        // console.log(timeComponents)
+            daysEl.textContent = timeComponents.days
+            hoursEl.textContent = timeComponents.hours
+            minutesEl.textContent = timeComponents.minutes
+            secEl.textContent = timeComponents.seconds
+}
+
 
 const startTimerHandler = () => {
-     setInterval(()=>{console.log("hey")},1000)
+     
+timerID = setInterval(timeCounterHandler,1000)
+
  }
 const inputHandler = () => {
-    startButtonEl.removeAttribute('disabled')
+    
 
     
 }
 
 startButtonEl.addEventListener('click', startTimerHandler)
 inputEl.addEventListener('input', inputHandler)
+
+
+
+
+
