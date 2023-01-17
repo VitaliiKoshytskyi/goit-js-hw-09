@@ -11,8 +11,11 @@ const secEl = document.querySelector('[data-seconds]')
 startButtonEl.setAttribute('disabled', 'true')
 
 
-let timerID = null;
+let timerID ;
 let selectedDate = null;
+
+
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -37,10 +40,6 @@ const options = {
 
 flatpickr(inputEl,options)
 
-
-
-
-
 const addLeadingZero = (value) => {
   return String(value).padStart(2,'0')
 }
@@ -53,7 +52,7 @@ const convertMs = (ms) => {
   const day = hour * 24;
   
   
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   const hours = addLeadingZero(Math.floor((ms % day) / hour));
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   const seconds =addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
@@ -61,14 +60,24 @@ const convertMs = (ms) => {
 }
 
 const timeCounterHandler = () => {
-     const currentDate = new Date();
-        const deltaDate = selectedDate - currentDate;
-        const timeComponents = convertMs(deltaDate)
-        // console.log(timeComponents)
-            daysEl.textContent = timeComponents.days
+    const currentDate = new Date();
+    const deltaDate = selectedDate - currentDate;
+   const timeComponents = convertMs(deltaDate)
+    // console.log(selectedDate)
+    // console.log(timeComponents)
+        
+    
+    if ( deltaDate >= 0) {
+        daysEl.textContent = timeComponents.days
             hoursEl.textContent = timeComponents.hours
             minutesEl.textContent = timeComponents.minutes
             secEl.textContent = timeComponents.seconds
+    console.log(secEl.textContent)
+        
+    } else {
+        alert('Woooohooo!!!')
+        clearInterval(timerID)
+    }
 }
 
 
@@ -77,14 +86,13 @@ const startTimerHandler = () => {
 timerID = setInterval(timeCounterHandler,1000)
 
  }
-const inputHandler = () => {
+// const inputHandler = () => {
     
 
-    
-}
+// }
 
 startButtonEl.addEventListener('click', startTimerHandler)
-inputEl.addEventListener('input', inputHandler)
+// inputEl.addEventListener('input', inputHandler)
 
 
 
