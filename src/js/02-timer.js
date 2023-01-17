@@ -11,7 +11,7 @@ const secEl = document.querySelector('[data-seconds]')
 startButtonEl.setAttribute('disabled', 'true')
 
 
-let timerID ;
+let timerID = null ;
 let selectedDate = null;
 
 
@@ -63,8 +63,7 @@ const timeCounterHandler = () => {
     const currentDate = new Date();
     const deltaDate = selectedDate - currentDate;
    const timeComponents = convertMs(deltaDate)
-    // console.log(selectedDate)
-    // console.log(timeComponents)
+   
         
     
     if ( deltaDate >= 0) {
@@ -72,7 +71,7 @@ const timeCounterHandler = () => {
             hoursEl.textContent = timeComponents.hours
             minutesEl.textContent = timeComponents.minutes
             secEl.textContent = timeComponents.seconds
-    console.log(secEl.textContent)
+    
         
     } else {
         alert('Woooohooo!!!')
@@ -83,7 +82,10 @@ const timeCounterHandler = () => {
 
 const startTimerHandler = () => {
      
-timerID = setInterval(timeCounterHandler,1000)
+    timerID = setInterval(timeCounterHandler, 1000)
+    inputEl.setAttribute("disabled", "true")
+    startButtonEl.setAttribute('disabled', 'true')
+
 
  }
 // const inputHandler = () => {
