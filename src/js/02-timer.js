@@ -15,7 +15,6 @@ let timerID = null ;
 let selectedDate = null;
 
 
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -26,8 +25,6 @@ const options = {
       if (selectedDates[0] >= new Date()) {
           startButtonEl.removeAttribute('disabled')
          selectedDate = selectedDates[0]
-
-        
       } else {
           startButtonEl.setAttribute('disabled', 'true')
           return alert("Please choose a date in the future")
@@ -35,8 +32,6 @@ const options = {
        
   },
 };
-
-
 
 flatpickr(inputEl,options)
 
@@ -62,17 +57,14 @@ const convertMs = (ms) => {
 const timeCounterHandler = () => {
     const currentDate = new Date();
     const deltaDate = selectedDate - currentDate;
-   const timeComponents = convertMs(deltaDate)
+    const timeComponents = convertMs(deltaDate)
    
-        
-    
     if ( deltaDate >= 0) {
         daysEl.textContent = timeComponents.days
-            hoursEl.textContent = timeComponents.hours
-            minutesEl.textContent = timeComponents.minutes
-            secEl.textContent = timeComponents.seconds
+        hoursEl.textContent = timeComponents.hours
+        minutesEl.textContent = timeComponents.minutes
+        secEl.textContent = timeComponents.seconds
     
-        
     } else {
         alert('Woooohooo!!!')
         clearInterval(timerID)
@@ -86,15 +78,11 @@ const startTimerHandler = () => {
     inputEl.setAttribute("disabled", "true")
     startButtonEl.setAttribute('disabled', 'true')
 
-
  }
-// const inputHandler = () => {
-    
 
-// }
 
 startButtonEl.addEventListener('click', startTimerHandler)
-// inputEl.addEventListener('input', inputHandler)
+
 
 
 
