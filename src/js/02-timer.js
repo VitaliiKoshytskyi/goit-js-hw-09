@@ -1,5 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from "notiflix";
+
 
 const inputEl = document.querySelector('#datetime-picker')
 const startButtonEl = document.querySelector('button')
@@ -7,8 +9,14 @@ const daysEl = document.querySelector('[data-days]')
 const hoursEl = document.querySelector('[data-hours]')
 const minutesEl = document.querySelector('[data-minutes]')
 const secEl = document.querySelector('[data-seconds]')
+const fieldEl = document.querySelector('.field')
+
 
 startButtonEl.setAttribute('disabled', 'true')
+startButtonEl.style.backgroundColor = 'red'
+
+
+
 
 
 let timerID = null ;
@@ -24,10 +32,11 @@ const options = {
      
       if (selectedDates[0] >= new Date()) {
           startButtonEl.removeAttribute('disabled')
+          startButtonEl.style.backgroundColor = 'green'
          selectedDate = selectedDates[0]
       } else {
           startButtonEl.setAttribute('disabled', 'true')
-          return alert("Please choose a date in the future")
+          return Notiflix.Notify.failure("Please choose a date in the future");
         }
        
   },
@@ -59,14 +68,14 @@ const timeCounterHandler = () => {
     const deltaDate = selectedDate - currentDate;
     const timeComponents = convertMs(deltaDate)
    
-    if ( deltaDate >= 0) {
+    if (deltaDate >= 0) {
         daysEl.textContent = timeComponents.days
         hoursEl.textContent = timeComponents.hours
         minutesEl.textContent = timeComponents.minutes
         secEl.textContent = timeComponents.seconds
     
     } else {
-        alert('Woooohooo!!!')
+        Notiflix.Notify.success('Woooohooo!!!');
         clearInterval(timerID)
     }
 }
