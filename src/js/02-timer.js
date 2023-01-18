@@ -9,11 +9,13 @@ const daysEl = document.querySelector('[data-days]')
 const hoursEl = document.querySelector('[data-hours]')
 const minutesEl = document.querySelector('[data-minutes]')
 const secEl = document.querySelector('[data-seconds]')
-const fieldEl = document.querySelector('.field')
+const fieldEl = document.querySelector('.timer')
 
 
 startButtonEl.setAttribute('disabled', 'true')
 startButtonEl.style.backgroundColor = 'red'
+fieldEl.style.display = "flex"
+
 
 
 
